@@ -8,7 +8,7 @@ import com.github.bun133.tinked.task.TickedTask
  *
  * @param R the return type of the action
  */
-interface Action<R> {
+interface Action<R : Any> {
     /**
      * returns ticked task that executes this action.
      */

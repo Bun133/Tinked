@@ -162,7 +162,7 @@
         <dependency>
             <groupId>com.github.Bun133</groupId>
             <artifactId>Tinked</artifactId>
-            <version>5d1a1181bf</version>
+            <version>6c960f51b2</version>
         </dependency>
     </dependencies>
 </project>

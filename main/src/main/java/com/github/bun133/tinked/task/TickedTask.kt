@@ -1,5 +1,7 @@
 package com.github.bun133.tinked.task
 
+import com.github.bun133.tinked.utils.Future
+
 /**
  * TickedTask is a task that is executed at exact tick duration.
  * and the processing of this task is done in that duration.
@@ -10,6 +12,8 @@ abstract class TickedTask<R : Any> : Task<R?> {
 
     /**
      * This run method executes the task with incrementing the currentTick,
+     *
+     * @note This method should not be called directly.
      *
      * for auto incrementing currentTick, use [TickedTaskRunner]
      */
@@ -41,6 +45,8 @@ abstract class TickedTask<R : Any> : Task<R?> {
      *
      * At The Last Tick, this method should return not null.
      *
+     * @note This method should not be called directly.
+     *
      * @param currentTick the current tick of the task.(*One*-Indexed)
      */
     abstract fun run(currentTick: Int, isLastTick: Boolean): R?
@@ -54,4 +60,9 @@ abstract class TickedTask<R : Any> : Task<R?> {
      * Cancel the running of this task.
      */
     abstract fun cancel()
+
+    /**
+     * Start the entire task.
+     */
+    abstract fun start(): Future<R>
 }

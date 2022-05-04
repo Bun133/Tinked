@@ -10,6 +10,8 @@ abstract class TickedTask<R : Any> : Task<R?> {
 
     /**
      * This run method executes the task with incrementing the currentTick,
+     *
+     * for auto incrementing currentTick, use [TickedTaskRunner]
      */
     override fun run(): R? {
         var toBe = currentTick + 1
@@ -47,4 +49,9 @@ abstract class TickedTask<R : Any> : Task<R?> {
      * returns the length of this task in ticks.
      */
     abstract val consumeTick: Int
+
+    /**
+     * Cancel the running of this task.
+     */
+    abstract fun cancel()
 }

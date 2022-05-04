@@ -3,18 +3,24 @@ package com.github.bun133.tinked.task.builder
 import com.github.bun133.tinked.task.Task
 import com.github.bun133.tinked.task.TickedTask
 import com.github.bun133.tinked.task.TickedTaskImpl
+import com.github.bun133.tinked.task.TickedTaskRunner
 
-fun <R : Any> tickedTask(b: TickedTaskBuilder<R>.() -> Unit): TickedTask<R> {
+/**
+ * A builder for [TickedTask],
+ * For get a instance of [TickedTaskRunner],
+ * @see [TickedTaskRunner.instance]
+ */
+fun <R : Any> TickedTaskRunner.tickedTask(b: TickedTaskBuilder<R>.() -> Unit): TickedTask<R> {
     val builder = TickedTaskBuilder<R>()
     builder.b()
-    return builder.build()
+    return builder.build(this)
 }
 
 class TickedTaskBuilder<R : Any> {
     private val notLast = mutableListOf<Pair<Task<*>, Int>>()
     private var last: Pair<Task<R>, Int>? = null
 
-    internal fun build(): TickedTask<R> {
+    internal fun build(runner: TickedTaskRunner): TickedTask<R> {
         if (last == null) {
             throw IllegalStateException("last task is not set")
         }
@@ -32,14 +38,14 @@ class TickedTaskBuilder<R : Any> {
             arr[currentIndex++] = last!!.first
         }
 
-        return TickedTaskImpl<R>(allCount) {
+        return TickedTaskImpl<R>(allCount, {
             if (it != allCount) {
                 arr[it]!!.run()
                 return@TickedTaskImpl null
             } else {
                 return@TickedTaskImpl last!!.first.run()
             }
-        }
+        }, runner)
     }
 
     /**

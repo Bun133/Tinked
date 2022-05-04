@@ -39,8 +39,9 @@ class TickedTaskBuilder<R : Any> {
         }
 
         return TickedTaskImpl<R>(allCount, {
-            if (it != allCount) {
-                arr[it]!!.run()
+            val index = it - 1
+            if (index != allCount) {
+                arr[index]!!.run()
                 return@TickedTaskImpl null
             } else {
                 return@TickedTaskImpl last!!.first.run()

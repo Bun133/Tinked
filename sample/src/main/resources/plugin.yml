@@ -1,0 +1,5 @@
+name: SamplePlugin
+version: '${project.version}'
+main: com.github.bun133.tinked.sampleplugin.Sampleplugin
+api-version: 1.16
+authors: [ Bun133 ]

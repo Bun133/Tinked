@@ -1,7 +1,5 @@
 package com.github.bun133.tinked.action
 
-import com.github.bun133.tinked.task.TickedTask
-
 /**
  * Action Class express an action that takes tick(s) to execute/complete.
  * And all actions are able to convert into a [com.github.bun133.tinked.task.TickedTask]

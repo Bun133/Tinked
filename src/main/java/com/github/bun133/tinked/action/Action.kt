@@ -8,15 +8,15 @@ import com.github.bun133.tinked.task.TickedTask
  *
  * @param R the return type of the action
  */
-interface Action<R : Any> {
+interface Action<I,R : Any> {
     /**
      * returns ticked task that executes this action.
      */
-    fun toTickedTask(): TickedTask<R>
+    fun toTickedTask(): TickedTask<I,R>
 
     /**
      * This method is not always needed to be implemented.
      * If the action can't be done in one tick, it should return null and terminate the action.
      */
-    fun executeAtOnce(): R?
+    fun executeAtOnce(i:I): R?
 }

@@ -9,10 +9,14 @@ abstract class TickedTaskRunner(open val plugin: JavaPlugin) {
     /**
      * These methods are should not be called manually
      */
-    abstract fun <R : Any> run(task: TickedTask<R>)
-    abstract fun <R : Any> cancel(task: TickedTask<R>)
-    abstract fun <R : Any> getTaskResult(task: TickedTask<R>): R?
-    abstract fun runningTasks(): List<TickedTask<*>>
+    inline fun <I : Any, reified R : Any> run(i: I, task: TickedTask<I, R>) {
+        run(i, task, R::class.java)
+    }
+
+    abstract fun <I : Any, R : Any> run(i: I, task: TickedTask<I, R>, rClass: Class<R>)
+    abstract fun <I : Any, R : Any> cancel(task: TickedTask<I, R>)
+    abstract fun <I : Any, R : Any> getTaskResult(task: TickedTask<I, R>): R?
+    abstract fun runningTasks(): List<TickedTask<*, *>>
 
     companion object {
         private val instances = mutableMapOf<JavaPlugin, TickedTaskRunner>()

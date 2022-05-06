@@ -2,30 +2,21 @@ package com.github.bun133.tinked.task
 
 import com.github.bun133.tinked.utils.Future
 
-class TickedTaskImpl<R : Any>(
-    override val consumeTick: Int,
-    val run: (Int) -> R?,
+class TickedTaskImpl<I : Any, R : Any>(
+    val tasks: List<Task<*, *>>,
+    override val consumeTick: Int = tasks.size,
     private val runner: TickedTaskRunner
-) : TickedTask<R>() {
+) : TickedTask<I, R>() {
     private var future: Future<R>? = null
-
-    override fun run(currentTick: Int, isLastTick: Boolean): R? {
-        val r = run(currentTick)
-        if (isLastTick) {
-            future?.setResult(r)
-        }
-
-        return r
-    }
 
     override fun cancel() {
         future = null
         runner.cancel(this)
     }
 
-    override fun start(): Future<R> {
+    override fun start(i: I): Future<R> {
         initFuture()
-        runner.run(this)
+        runner.run(i, this)
         return future!!
     }
 

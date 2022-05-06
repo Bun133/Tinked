@@ -1,19 +1,17 @@
 package com.github.bun133.tinked.task
 
+import com.github.bun133.tinked.utils.Future
 import org.bukkit.plugin.java.JavaPlugin
 
 /**
  * Runner of [TickedTask]
+ *
  */
 abstract class TickedTaskRunner(open val plugin: JavaPlugin) {
     /**
      * These methods are should not be called manually
      */
-    inline fun <I : Any, reified R : Any> run(i: I, task: TickedTask<I, R>) {
-        run(i, task, R::class.java)
-    }
-
-    abstract fun <I : Any, R : Any> run(i: I, task: TickedTask<I, R>, rClass: Class<R>)
+    abstract fun <I : Any, R : Any> run(i: I, task: TickedTask<I, R>): Future<R>
     abstract fun <I : Any, R : Any> cancel(task: TickedTask<I, R>)
     abstract fun <I : Any, R : Any> getTaskResult(task: TickedTask<I, R>): R?
     abstract fun runningTasks(): List<TickedTask<*, *>>

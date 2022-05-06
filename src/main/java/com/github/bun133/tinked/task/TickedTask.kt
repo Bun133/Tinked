@@ -17,7 +17,7 @@ abstract class TickedTask<I : Any, R : Any> : Task<I, R?> {
      *
      * @see [TickedTask.start]
      */
-    override fun run(i: I): R? {
+    override fun run(i: I): R {
         throw UnsupportedOperationException("This method should not be called directly.")
     }
 

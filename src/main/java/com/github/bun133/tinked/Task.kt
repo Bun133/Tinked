@@ -1,6 +1,6 @@
 package com.github.bun133.tinked
 
-abstract class Task<I , T >() {
+abstract class Task<I, T>() {
     protected var nextNode: Task<T, *>? = null
     fun <R : Any> then(other: Task<T, R>): Task<T, R> {
         nextNode = other
@@ -15,5 +15,5 @@ abstract class Task<I , T >() {
         nextNode?.run(result)
     }
 
-    abstract fun runnable(input: I): T
+    protected abstract fun runnable(input: I): T
 }

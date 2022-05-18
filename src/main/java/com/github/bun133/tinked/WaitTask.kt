@@ -8,9 +8,8 @@ import org.bukkit.plugin.java.JavaPlugin
  */
 class WaitTask<I>(private val tick: Long, private val plugin: JavaPlugin) : TickedTask<I, I>() {
     override fun run(input: I) {
-        val result = runnable(input)
         Bukkit.getServer().scheduler.runTaskLater(plugin, Runnable {
-            nextNode?.run(result)
+            nextNode?.run(input)
         }, tick)
     }
 

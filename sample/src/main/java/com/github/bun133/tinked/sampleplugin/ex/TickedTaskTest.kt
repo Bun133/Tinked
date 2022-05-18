@@ -13,8 +13,8 @@ class TickedTaskTest : Example {
     val testTask = { plugin: JavaPlugin ->
         RunnableTask<Unit, String> {
             "test"
-        }.also {
-            it.then(WaitTask(3, plugin))
+        }.apply {
+            then(WaitTask(3, plugin))
                 .then(RunnableTask<String, Unit> { s ->
                     plugin.server.broadcast(Component.text(s))
                 })

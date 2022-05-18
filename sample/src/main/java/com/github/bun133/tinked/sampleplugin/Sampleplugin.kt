@@ -1,5 +1,6 @@
 package com.github.bun133.tinked.sampleplugin
 
+import com.github.bun133.tinked.sampleplugin.ex.TaskTest
 import com.github.bun133.tinked.sampleplugin.ex.TickedTaskTest
 import dev.kotx.flylib.command.Command
 import dev.kotx.flylib.flyLib
@@ -20,6 +21,10 @@ class SampleCommand() : Command("tnk") {
             selectionArgument("arg", "Task", "TickedTask")
             executes {
                 when (typedArgs[0] as String) {
+                    "Task" -> {
+                        success("Running Task")
+                        TaskTest().start(this)
+                    }
                     "TickedTask" -> {
                         success("Running TickedTask")
                         TickedTaskTest().start(this)

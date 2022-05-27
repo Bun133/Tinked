@@ -31,6 +31,23 @@ RunnableTask {
 }
 ```
 
+# Apply
+
+`Apply`は`Then`と似ていますが、少し違うところがあります。
+
+この関数も`Then`と同じく[Task](https://github.com/Bun133/Tinked/blob/main/src/main/java/com/github/bun133/tinked/Task.kt)
+に実装されていますが、このタスクは2つのタスクを1つのタスクにするために使われます。
+
+```kotlin
+// entireTask(receive I,return R)
+val entireTask: Task<I, R> = RunnableTask<I, V> {
+    // FirstTask(receive I,return V)
+}.apply(RunnableTask<V, R> {
+    // SecondTask(receive V,return R)
+})
+
+```
+
 # 実行方法
 
 上の例でも示したように、Tinkedの`Then`は常に**チェーンの最後のタスク**を返します。

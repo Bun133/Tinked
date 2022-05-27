@@ -27,4 +27,13 @@ abstract class Task<I, T>() {
     }
 
     protected abstract fun runnable(input: I): T
+
+    companion object {
+        /**
+         * JSのPromise.allと同じようなタスクを作る
+         */
+        fun <I, R> all(vararg task: Task<I, R>): Task<I, List<R>> {
+            return AllTask<I,R>(task.toList())
+        }
+    }
 }

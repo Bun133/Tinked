@@ -1,5 +1,6 @@
 package com.github.bun133.tinked.sampleplugin
 
+import com.github.bun133.tinked.sampleplugin.ex.EventTask
 import com.github.bun133.tinked.sampleplugin.ex.TaskTest
 import com.github.bun133.tinked.sampleplugin.ex.TickedTaskTest
 import com.github.bun133.tinked.sampleplugin.ex.WaitEventTask
@@ -19,7 +20,7 @@ class SampleCommand() : Command("tnk") {
     init {
         description("Sample Command of Tinked Library")
         usage {
-            selectionArgument("arg", "Task", "TickedTask","WaitEvent")
+            selectionArgument("arg", "Task", "TickedTask", "WaitEvent", "EventTask")
             executes {
                 when (typedArgs[0] as String) {
                     "Task" -> {
@@ -33,6 +34,10 @@ class SampleCommand() : Command("tnk") {
                     "WaitEvent" -> {
                         success("Running WaitEvent")
                         WaitEventTask().start(this)
+                    }
+                    "EventTask" -> {
+                        success("Running EventTask")
+                        EventTask().start(this)
                     }
                     else -> {
                         fail("Unknown Task")

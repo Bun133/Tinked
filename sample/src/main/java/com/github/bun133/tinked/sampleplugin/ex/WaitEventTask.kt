@@ -11,7 +11,11 @@ class WaitEventTask : Example {
         val p = ctx.player
         if (p != null) {
             val task =
-                com.github.bun133.tinked.WaitEventTask<Player, PlayerInteractEvent>({ it.player == p }, ctx.plugin)
+                com.github.bun133.tinked.WaitEventTask<Player, PlayerInteractEvent>(
+                    { it.player == p },
+                    ctx.plugin,
+                    PlayerInteractEvent::class.java
+                )
                     .apply {
                         then(RunnableTask { it.sendMessage(Component.text("Waited For PlayerInteractEvent!")) })
                     }

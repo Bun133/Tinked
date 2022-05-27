@@ -2,6 +2,7 @@ package com.github.bun133.tinked
 
 import org.bukkit.event.Event
 import org.bukkit.event.EventPriority
+import org.bukkit.event.HandlerList
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -40,11 +41,14 @@ class WaitEventTask<I, E : Event>(
         isSet = true
     }
 
-    fun onEvent(e: E) {
+    private fun onEvent(e: E) {
         if (isSet && predicate(e)) {
             (i as I).let {
                 nextNode?.run(it)
             }
+
+            // unregister
+            HandlerList.unregisterAll(this)
         }
     }
 }

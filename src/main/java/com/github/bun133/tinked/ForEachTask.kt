@@ -12,9 +12,9 @@ class ForEachTask<T, R>(private val realTask: () -> Task<T, R>) : Task<List<T>, 
     private var index = 0
 
     override fun run(input: List<T>) {
+        inputs.clear()
         inputs.addAll(input)
         index = 0
-        inputs.clear()
         run()
     }
 

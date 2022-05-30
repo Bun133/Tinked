@@ -24,7 +24,7 @@ class ForEachTask<T, R>(private val realTask: () -> Task<T, R>) : Task<List<T>, 
         if (input != null) {
             task.run(input)
                 .apply {
-                    then(RunnableTask { run() })
+                    then(RunnableTask { index++;run() })
                 }
         } else {
             // 終了

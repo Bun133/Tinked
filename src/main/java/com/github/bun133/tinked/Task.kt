@@ -33,7 +33,11 @@ abstract class Task<I, T>() {
          * JSのPromise.allと同じようなタスクを作る
          */
         fun <I, R> all(vararg task: Task<I, R>): Task<I, List<R>> {
-            return AllTask<I,R>(task.toList())
+            return AllTask<I, R>(task.toList())
+        }
+
+        fun <I, R> forEach(task: () -> Task<I, R>): Task<List<I>, Unit> {
+            return ForEachTask(task)
         }
     }
 }

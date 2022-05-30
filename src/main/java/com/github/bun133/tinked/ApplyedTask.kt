@@ -13,6 +13,8 @@ open class ApplyedTask<I, V, R : Any>(val one: Task<I, V>, val two: Task<V, R>) 
             then(two)
                 .then(RunnableTask { nextNode?.run(it);Unit })
         }
+
+        one.run(input)
     }
 }
 

@@ -21,20 +21,21 @@ open class RunnableTask<I, R>(val r: RunnableTaskContext<I, R>.(I) -> R) : Task<
  */
 class RunnableTaskContext<I, R>(private val task: RunnableTask<I, R>, private val input: I) {
 
-    private val toApply = mutableListOf<Task<R, *>>()
+    private val toApply = mutableListOf<Task<R, Any>>()
 
     /**
      * このタスクの後に実行するタスクを設定する
      * ただし、返り値は無視される
-     * このメソッドを介して追加されたタスクはこのタスク終了後、逐次実行される
+     * このメソッドを介して追加されたタスクはこのタスク終了後、パラレル実行される
      */
-    fun apply(otherTask: Task<R, *>) {
+    fun apply(otherTask: Task<R, Any>) {
         toApply.add(otherTask)
     }
 
     internal fun run() {
         val r = task.r(this, input)
-        toApply.forEach { it.run(r) }
-        task.getNextNode()?.run(r)
+        Task.all(*toApply.toTypedArray()).then(RunnableTask<List<Any>, Unit> {
+            this@RunnableTaskContext.task.getNextNode()?.run(r)
+        })
     }
 }

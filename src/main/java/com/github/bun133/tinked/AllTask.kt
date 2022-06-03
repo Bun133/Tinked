@@ -12,8 +12,12 @@ class AllTask<I, R>(val tasks: List<Task<I, R>>) : Task<I, List<R>>() {
 
     override fun run(input: I) {
         results.clear()
-        tasks.forEach {
-            it.apply(RunnableTask { r -> checkFinished(it, r) }).run(input)
+        if (tasks.isEmpty()) {
+            nextNode?.run(listOf())
+        } else {
+            tasks.forEach {
+                it.apply(RunnableTask { r -> checkFinished(it, r) }).run(input)
+            }
         }
     }
 

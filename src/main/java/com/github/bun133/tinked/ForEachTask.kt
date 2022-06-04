@@ -27,6 +27,7 @@ class ForEachTask<T, R>(private val realTask: () -> Task<T, R>) : Task<List<T>, 
             }.run(input)
         } else {
             // 終了
+            nextNode?.run(Unit)
         }
     }
 }
